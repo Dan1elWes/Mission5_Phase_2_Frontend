@@ -1,12 +1,12 @@
-import './App.css'
+import React from "react";
+import "./App.css";
+
 
 function App() {
-
   return (
-    <>
-      <div> Mission 5 Phase 2 </div>
+    <>Mission 5 Phase 2
     </>
-  )
+  );
 }
 
-export default App
+export default App;
