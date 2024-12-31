@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../styles/NavBar2.module.css";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar2() {
   return (
@@ -27,13 +28,16 @@ export default function NavBar2() {
           />
         </div>
       </div>
-      <button className={styles.locateButton}>
-        <span>Locate Z Station</span>
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/76d0fb7a-0b3d-470f-b96e-cc3f93bed0b3?apiKey=f1e955cb66494e36a9a2064626167bd8&"
-          alt="Location icon"
-        />
-      </button>
+      <NavLink to="/locate-z-station/filter-by-services" className={styles.navLink}>
+        <button className={styles.locateButton}>
+          <span>Locate Z Station</span>
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/76d0fb7a-0b3d-470f-b96e-cc3f93bed0b3?apiKey=f1e955cb66494e36a9a2064626167bd8&"
+            alt="Location icon"
+          />
+        </button>
+      </NavLink>
     </nav>
   );
 }
+

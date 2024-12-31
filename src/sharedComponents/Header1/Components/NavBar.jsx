@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import styles from "../styles/NavBar.module.css";
+import { NavLink } from "react-router-dom";
+
+
+
+
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,10 +29,12 @@ export default function NavBar() {
           <button className={styles.businessButton}>For business</button>
         </div>
       </div>
-      <div className={`${styles.navSection} ${isMenuOpen ? styles.showMenu : ""}`}>
+      <div
+        className={`${styles.navSection} ${isMenuOpen ? styles.showMenu : ""}`}
+      >
         <div className={styles.infoGroup}>
-          <span className={ styles.zAppButton}>Z App</span>
-          <span className={styles.aboutZButton}>About Z</span>
+          <span className={styles.zAppButton}>Z App</span>
+          <span className={styles.aboutZ}>About Z</span>
           <img
             src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/e3a8447b8e716bc3e41aec5e8956bdd97eb96aef8cc7c7c857c4bc66544f46b7?apiKey=f1e955cb66494e36a9a2064626167bd8&"
             className={styles.navIcon}
@@ -56,7 +63,14 @@ export default function NavBar() {
               <div className={styles.menuItem}>Rewards and promotions</div>
               <div className={styles.menuItem}>Z App</div>
               <div className={styles.menuItem}>About Z</div>
-              <button className={styles.locateButton}>Locate Z Station</button>
+              <NavLink
+                to="/locate-z-station/filter-by-services"
+                className={styles.navLink}
+              >
+                <button className={styles.locateButton}>
+                  Locate Z Station
+                </button>
+              </NavLink>
               <div className={styles.loginButton}>
                 <span>Login</span>
                 <img

@@ -20,6 +20,7 @@
   cursor: pointer;
   transition: opacity 0.2s ease;
   color: #000;
+  font-weight: bold;
 }
 
 .menuItem:hover {
@@ -30,6 +31,10 @@
 .menuItem img {
   width: 20px;
   height: 20px;
+}
+
+.navLink {
+  text-decoration: none;
 }
 
 .locateButton {

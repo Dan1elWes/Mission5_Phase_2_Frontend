@@ -6,10 +6,6 @@ export default function HomePage() {
   return (
     <>
       <HeaderMain />
-    
-      {/* <nav>
-        <NavLink to="/locate-z-station">Locate Z Station</NavLink>
-      </nav> */}
     </>
   );
 }

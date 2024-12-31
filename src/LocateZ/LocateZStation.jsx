@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import HeaderMain from "../sharedComponents/Header1/Components/HeaderMain";
 
 export default function LocateZStation() {
   return (
     <nav>
-      <h1>Locate Z Station</h1>
+      <HeaderMain />
       <NavLink to="/locate-z-station/filter-by-services">
         Filter by services
       </NavLink>
@@ -18,3 +19,4 @@ export default function LocateZStation() {
     </nav>
   );
 }
+
