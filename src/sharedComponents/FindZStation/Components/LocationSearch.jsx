@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/LocationSearch.module.css";
 import FilterByServices from "../../../FilterByServices/FilterByServices";
-import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByPrice";
+import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByFuelPrice";
 import FilterByDistance from "../../../FilterByDistance/FilterByDistance";
 import { useState } from "react";
 
