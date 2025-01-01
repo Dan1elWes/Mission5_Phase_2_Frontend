@@ -28,7 +28,7 @@ export default function NavBar2() {
           />
         </div>
       </div>
-      <NavLink to="/locate-z-station/filter-by-services" className={styles.navLink}>
+      <NavLink to="/locate-z-station" className={styles.navLink}>
         <button className={styles.locateButton}>
           <span>Locate Z Station</span>
           <img
@@ -40,4 +40,3 @@ export default function NavBar2() {
     </nav>
   );
 }
-

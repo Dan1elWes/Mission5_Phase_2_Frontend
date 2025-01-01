@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/NavBar.module.css";
-import { NavLink } from "react-router-dom";
-
-
-
-
+import { NavLink, Link } from "react-router-dom";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,11 +12,13 @@ export default function NavBar() {
   return (
     <div className={styles.header}>
       <div className={styles.leftSection}>
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/74636c578b292d9b24050900286a5fa9c3c269b92b94b3ede804d92f78260fd8?apiKey=f1e955cb66494e36a9a2064626167bd8&"
-          className={styles.logo}
-          alt="Company logo"
-        />
+        <Link to="/">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/74636c578b292d9b24050900286a5fa9c3c269b92b94b3ede804d92f78260fd8?apiKey=f1e955cb66494e36a9a2064626167bd8&"
+            className={styles.logo}
+            alt="Company logo"
+          />
+        </Link>
         <button className={styles.hamburger} onClick={toggleMenu}>
           ☰
         </button>
@@ -63,10 +61,7 @@ export default function NavBar() {
               <div className={styles.menuItem}>Rewards and promotions</div>
               <div className={styles.menuItem}>Z App</div>
               <div className={styles.menuItem}>About Z</div>
-              <NavLink
-                to="/locate-z-station/filter-by-services"
-                className={styles.navLink}
-              >
+              <NavLink to="/locate-z-station" className={styles.navLink}>
                 <button className={styles.locateButton}>
                   Locate Z Station
                 </button>
