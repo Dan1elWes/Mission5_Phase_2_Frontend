@@ -1,8 +1,9 @@
 .container {
   z-index: 10;
   display: flex;
-  width: 1920px;
-  height: 1080px;
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
   flex-direction: column;
   padding: 0 40px;
   margin: 0 auto;
