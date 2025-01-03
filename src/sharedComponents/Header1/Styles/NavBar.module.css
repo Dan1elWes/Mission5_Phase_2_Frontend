@@ -1,0 +1,278 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Decrease the gap between logo and buttons */
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 18px;
+  font-size: xx-large;
+}
+
+.navLink {
+  text-decoration: none;
+}
+.personalButton {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font: 600 24px/1 Calibre, sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  background: linear-gradient(270deg, #fea03a 0%, #ef5d15 100%);
+  color: white;
+}
+
+.businessButton {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font: 600 24px/1 Calibre, sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  background-color: #fff;
+  color: black;
+}
+
+.businessButton:hover,
+.zAppButton:hover,
+.aboutZButton:hover {
+  opacity: 0.9;
+  color: #fea03a;
+  cursor: pointer;
+}
+
+.navSection {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Decrease the gap between nav items */
+  font: 500 24px/1 Calibre, sans-serif;
+  padding-right: 10px; /* Add slight padding to the right section */
+}
+
+.navIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.navIcon:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.loginButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(90deg, #ed5910 0%, #fea03a 100%), #d9d9d9;
+  padding: 8px 24px;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: white;
+}
+
+.loginButton:hover {
+  color: #c4c4c4;
+  opacity: 0.5;
+}
+
+.userIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 24px;
+  background-color: #fff;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Decrease the gap between Z icon, For personal, and For business */
+}
+
+.infoGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Decrease the gap between Z App, About Z, search icon, and Login button */
+  padding-right: 30px;
+}
+
+.infoGroup span {
+  color: black; /* Match the color of "For business" */
+  font-weight: 600; /* Match the font weight of "For business" */
+}
+
+.loginButton span {
+  color: white; /* Keep the original color for the login button */
+}
+
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  width: 90%;
+  max-width: 300px;
+  z-index: 1000;
+}
+
+.menuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  color: #000;
+}
+
+.menuItem:hover {
+  opacity: 0.8;
+}
+
+.locateButton {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(90deg, #ed5910 0%, #fea03a 100%), #d9d9d9;
+  border: none;
+  border-radius: 32px;
+  padding: 8px 40px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.locateButton:hover {
+  background-color: #c4c4c4;
+}
+
+.locateButton img {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background-color: #fff;
+}
+
+@media (max-width: 1920px) {
+  .header {
+    gap: 12px;
+  }
+
+  .personalButton,
+  .businessButton {
+    font-size: 20px;
+    padding: 6px 20px;
+  }
+
+  .navSection {
+    font-size: 20px;
+    gap: 16px; /* Adjust the gap between nav items */
+  }
+}
+
+@media (max-width: 991px) {
+  .hamburger {
+    display: block;
+  }
+
+  .navSection {
+    display: none;
+  }
+
+  .navSection.showMenu {
+    display: flex;
+  }
+
+  .leftSection {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .personalButton,
+  .businessButton {
+    font-size: 20px;
+    padding: 6px 20px;
+  }
+
+  .navSection {
+    font-size: 20px;
+    gap: 16px; /* Adjust the gap between nav items */
+  }
+
+  .mobileMenu {
+    display: flex;
+  }
+
+  .infoGroup {
+    display: none;
+  }
+
+  .buttonGroup {
+    display: none;
+  }
+
+  .navBar2 {
+    display: none;
+  }
+
+  .navIcon {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .hamburger {
+    display: none;
+  }
+
+  .navSection {
+    display: flex;
+  }
+
+  .infoGroup {
+    display: flex;
+  }
+
+  .buttonGroup {
+    display: flex;
+  }
+
+  .navBar2 {
+    display: flex;
+  }
+
+  .navIcon {
+    display: block;
+  }
+}
