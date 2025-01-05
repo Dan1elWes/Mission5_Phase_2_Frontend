@@ -32,7 +32,7 @@ export default function NavBar() {
       >
         <div className={styles.infoGroup}>
           <span className={styles.zAppButton}>Z App</span>
-          <span className={styles.aboutZ}>About Z</span>
+          <span className={styles.aboutZButton}>About Z</span>
           <img
             src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/e3a8447b8e716bc3e41aec5e8956bdd97eb96aef8cc7c7c857c4bc66544f46b7?apiKey=f1e955cb66494e36a9a2064626167bd8&"
             className={styles.navIcon}
