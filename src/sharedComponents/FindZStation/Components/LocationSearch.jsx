@@ -5,8 +5,110 @@ import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByFuelPrice";
 import FilterByDistance from "../../../FilterByDistance/FilterByDistance";
 import { useState } from "react";
 
+const API_KEY = "AIzaSyCU4kzOocg3otWJE5QqRHca30Zw5FP70zs";
+
 export const LocationSearch = () => {
   const [activeTab, setActiveTab] = useState("fuelPrice"); // Set 'fuelPrice' as the default active tab
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: -40.9006,
+    longitude: 174.886,
+    location: "",
+  }); // Default position (New Zealand)
+
+  const [zoomLevel, setZoomLevel] = useState(6); // Default zoom level for New Zealand
+
+  const handleInputChange = (event) => {
+    const location = event.target.value;
+    setCurrentLocation({ ...currentLocation, location });
+  };
+
+  const handleSearch = async () => {
+    const location = currentLocation.location;
+    console.log(`Searching for stations in: ${location}`);
+    await fetchLocationData(location);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Your custom logic here
+  };
+
+  const extractLocationDetails = (addressComponents) => {
+    const localityComponent = addressComponents.find((component) =>
+      component.types.includes("locality")
+    );
+    const countryComponent = addressComponents.find((component) =>
+      component.types.includes("country")
+    );
+    const localityName = localityComponent
+      ? localityComponent.long_name
+      : "Unknown locality";
+    const countryName = countryComponent
+      ? countryComponent.long_name
+      : "Unknown country";
+    return { localityName, countryName };
+  };
+
+  const fetchLocationData = async (location) => {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.status === "OK") {
+        const { lat, lng } = data.results[0].geometry.location;
+        const { localityName, countryName } = extractLocationDetails(
+          data.results[0].address_components
+        );
+        const fullLocation = `${localityName}, ${countryName}`;
+        setCurrentLocation({
+          latitude: lat,
+          longitude: lng,
+          location: fullLocation,
+        });
+        setZoomLevel(13); // Zoom in more for user-specified location
+      } else {
+        console.error("Error fetching location coordinates:", data.status);
+      }
+    } catch (error) {
+      console.error("Error fetching location coordinates:", error);
+    }
+  };
+
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          await fetchLocationName(latitude, longitude);
+        },
+        (error) => {
+          console.error("Error getting current location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const fetchLocationName = async (latitude, longitude) => {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.status === "OK") {
+        const { localityName, countryName } = extractLocationDetails(
+          data.results[0].address_components
+        );
+        const fullLocation = `${localityName}, ${countryName}`;
+        setCurrentLocation({ latitude, longitude, location: fullLocation });
+        setZoomLevel(13); // Zoom in more for user-specified location
+      } else {
+        console.error("Error fetching location name:", data.status);
+      }
+    } catch (error) {
+      console.error("Error fetching location name:", error);
+    }
+  };
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -25,15 +127,21 @@ export const LocationSearch = () => {
       <div className={styles.container}>
         <div className={styles.searchContainer}>
           <h2 className={styles.findaStationText}>Find a Station</h2>
-          <form role="search" className={styles.searchField}>
+          <form
+            role="search"
+            className={styles.searchField}
+            onSubmit={handleSubmit}
+          >
             <input
               type="search"
+              value={currentLocation.location}
               id="locationSearch"
               className={styles.searchPlaceholder}
               placeholder="Please enter a location / Station / Truck Stop / Airtop"
               aria-label="Search for location"
+              onChange={handleInputChange}
             />
-            <button className={styles.searchIcon}>
+            <button className={styles.searchIcon} onClick={handleSearch}>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/aed59eff0e8517a6f05c7173c66db43ec8a1a9a84026c95e04dae987750c2c94?apiKey=f1e955cb66494e36a9a2064626167bd8&"
                 alt=""
@@ -45,7 +153,7 @@ export const LocationSearch = () => {
           <div className={styles.locationContainer}>
             <button
               className={styles.locationText}
-              onClick={() => {}}
+              onClick={handleUseCurrentLocation}
               aria-label="Use current location"
             >
               <img
@@ -92,7 +200,7 @@ export const LocationSearch = () => {
           </div>
         </div>
       </div>
-      <div className={ styles.activeTabContainer}>{renderActiveTab()}</div>
+      <div className={styles.activeTabContainer}>{renderActiveTab()}</div>
     </>
   );
 };
