@@ -1,0 +1,35 @@
+.actionButtonContainer {
+  display: flex;
+  width: 180px;
+  height: 38px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 52px;
+  padding: 14px 30px 7px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 52px;
+  background: linear-gradient(270deg, #fea03a 0%, #ffcb08 100%);
+  backdrop-filter: blur(7.5px);
+}
+
+.actionButton:hover {
+  background-color: #241f7a;
+}
+
+.actionIcon {
+  aspect-ratio: 0.94;
+  width: 20px;
+  border-radius: 32px;
+  background-color: #fff;
+  margin-right: 10px;
+}
+
+@media (max-width: 991px) {
+  .actionButton {
+    padding: 0 20px;
+  }
+}
+

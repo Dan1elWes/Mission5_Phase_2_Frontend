@@ -92,7 +92,7 @@ export const LocationSearch = () => {
           </div>
         </div>
       </div>
-      <div>{renderActiveTab()}</div>
+      <div className={ styles.activeTabContainer}>{renderActiveTab()}</div>
     </>
   );
 };
