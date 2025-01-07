@@ -1,8 +1,9 @@
 .footer {
-  background-color: #1a1a1a;
-  color: white;
+  background-color: white;
+  color: #333;
   padding: 3rem 0;
   margin-top: auto;
+  border-top: 1px solid #000;
 }
 
 .footerContent {
@@ -19,9 +20,10 @@
 }
 
 .footerSection h3 {
-  color: #00a651;
+  color: #2C259B;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .footerSection ul {

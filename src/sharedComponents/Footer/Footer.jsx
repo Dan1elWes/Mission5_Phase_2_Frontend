@@ -8,20 +8,18 @@ const Footer = () => {
         <div className={styles.footerSection}>
           <h3>Products and Services</h3>
           <ul>
-            <li>Electric Vehicles</li>
-            <li>Charging Solutions</li>
-            <li>Energy Plans</li>
-            <li>Mobile App</li>
+            <li>At the Station</li>
+            <li>Z App</li>
+            <li>Rewards and Promotions</li>
           </ul>
         </div>
         
         <div className={styles.footerSection}>
           <h3>For Businesses</h3>
           <ul>
-            <li>Fleet Solutions</li>
-            <li>Commercial Charging</li>
-            <li>Partner Program</li>
-            <li>Business Support</li>
+            <li>Z Business Fuel Card</li>
+            <li>Fuels and Services</li>
+            <li>Business Tips and Stories</li>
           </ul>
         </div>
         
@@ -29,9 +27,12 @@ const Footer = () => {
           <h3>About Z</h3>
           <ul>
             <li>Our Story</li>
+            <li>Our People</li>
+            <li>What We Stand For</li>
             <li>Sustainability</li>
-            <li>Careers</li>
-            <li>Contact Us</li>
+            <li>News</li>
+            <li>Careers At Z</li>
+            <li>Corporate Centre</li>
           </ul>
         </div>
       </div>
