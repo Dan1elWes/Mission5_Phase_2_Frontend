@@ -109,6 +109,17 @@
   flex-wrap: wrap;
 }
 
+.bottomFiltersContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
+}
+
+.bottomFilterSection {
+  flex: 1;
+}
+
 .filterButton {
   border-radius: 8px;
   text-transform: none;
@@ -144,5 +155,4 @@
   gap: 16px;
   padding-top: 24px;
   padding-left: 16px;
-  border-top: 1px solid #e0e0e0;
 }

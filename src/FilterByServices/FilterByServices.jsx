@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography, Divider } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import styles from './FilterByServices.module.css';
 
 export default function FilterByServices() {
   const [selectedFuels, setSelectedFuels] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedStationTypes, setSelectedStationTypes] = useState([]);
+  const [selectedSortBy, setSelectedSortBy] = useState('');
 
   const fuelOptions = [
     'ZX Premium',
@@ -34,6 +35,12 @@ export default function FilterByServices() {
     'Truck Stop'
   ];
 
+  const sortByOptions = [
+    'Nearest',
+    'Cheapest',
+    'Economical'
+  ];
+
   const handleFuelClick = (fuel) => {
     setSelectedFuels(prevFuels =>
       prevFuels.includes(fuel)
@@ -58,17 +65,23 @@ export default function FilterByServices() {
     );
   };
 
+  const handleSortByClick = (sortOption) => {
+    setSelectedSortBy(selectedSortBy === sortOption ? '' : sortOption);
+  };
+
   const handleResetFilters = () => {
     setSelectedFuels([]);
     setSelectedServices([]);
     setSelectedStationTypes([]);
+    setSelectedSortBy('');
   };
 
   const handleApplyFilters = () => {
     console.log({
       fuels: selectedFuels,
       services: selectedServices,
-      stationTypes: selectedStationTypes
+      stationTypes: selectedStationTypes,
+      sortBy: selectedSortBy
     });
   };
 
@@ -91,8 +104,6 @@ export default function FilterByServices() {
         </Box>
       </Box>
 
-      <Divider />
-
       <Box>
         <Typography className={styles.categoryTitle}>
           Select Services
@@ -110,22 +121,39 @@ export default function FilterByServices() {
         </Box>
       </Box>
 
-      <Divider />
+      <Box className={styles.bottomFiltersContainer}>
+        <Box className={styles.bottomFilterSection}>
+          <Typography className={styles.categoryTitle}>
+            Select Station Type
+          </Typography>
+          <Box className={styles.filterGroup}>
+            {stationTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => handleStationTypeClick(type)}
+                className={`${styles.filterButton} ${selectedStationTypes.includes(type) ? styles.filterButtonSelected : ''}`}
+              >
+                {type}
+              </button>
+            ))}
+          </Box>
+        </Box>
 
-      <Box>
-        <Typography className={styles.categoryTitle}>
-          Select Station Type
-        </Typography>
-        <Box className={styles.filterGroup}>
-          {stationTypes.map((type) => (
-            <button
-              key={type}
-              onClick={() => handleStationTypeClick(type)}
-              className={`${styles.filterButton} ${selectedStationTypes.includes(type) ? styles.filterButtonSelected : ''}`}
-            >
-              {type}
-            </button>
-          ))}
+        <Box className={styles.bottomFilterSection}>
+          <Typography className={styles.categoryTitle}>
+            Sort By
+          </Typography>
+          <Box className={styles.filterGroup}>
+            {sortByOptions.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleSortByClick(option)}
+                className={`${styles.filterButton} ${selectedSortBy === option ? styles.filterButtonSelected : ''}`}
+              >
+                {option}
+              </button>
+            ))}
+          </Box>
         </Box>
       </Box>
 
