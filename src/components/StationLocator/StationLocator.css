@@ -1,0 +1,135 @@
+.station-locator {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.filter-section {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.filter-section h2 {
+  color: #1A2632;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.distance-filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.distance-filter label {
+  font-weight: 500;
+  color: #1A2632;
+}
+
+.distance-filter select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.distance-filter select:focus {
+  outline: none;
+  border-color: #FF4F1F;
+}
+
+.stations-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.station-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.station-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.station-card h3 {
+  color: #1A2632;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.station-card p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.station-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-tag {
+  background-color: #f0f0f0;
+  color: #1A2632;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+}
+
+.view-details-btn {
+  background-color: #FF4F1F;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.view-details-btn:hover {
+  background-color: #e64517;
+}
+
+.no-stations {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  color: #666;
+}
+
+.loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .station-locator {
+    padding: 1rem;
+  }
+
+  .filter-section {
+    padding: 1.5rem;
+  }
+
+  .stations-list {
+    grid-template-columns: 1fr;
+  }
+}
