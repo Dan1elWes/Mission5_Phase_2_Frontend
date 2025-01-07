@@ -38,9 +38,10 @@
 }
 
 .serviceName {
-  font-weight: 500;
+  font-weight: 700;
   margin: 0;
   color: #2c3e50;
+  font-size: 1.2rem;
 }
 
 .stationList {
@@ -97,10 +98,10 @@
 }
 
 .categoryTitle {
-  color: #FF6B00;
-  font-weight: bold;
-  font-size: 1.5rem;
-  margin-bottom: 16px;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+  color: #FF6B00 !important;
 }
 
 .filterGroup {
