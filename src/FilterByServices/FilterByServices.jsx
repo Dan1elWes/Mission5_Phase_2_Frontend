@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, Divider } from '@mui/material';
+import styles from './FilterByServices.module.css';
 
 export default function FilterByServices() {
   const [selectedFuels, setSelectedFuels] = useState([]);
@@ -57,26 +58,35 @@ export default function FilterByServices() {
     );
   };
 
+  const handleResetFilters = () => {
+    setSelectedFuels([]);
+    setSelectedServices([]);
+    setSelectedStationTypes([]);
+  };
+
+  const handleApplyFilters = () => {
+    console.log({
+      fuels: selectedFuels,
+      services: selectedServices,
+      stationTypes: selectedStationTypes
+    });
+  };
+
   return (
-    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box className={styles.filterContainer}>
       <Box>
-        <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Select Fuel Type
+        <Typography className={styles.categoryTitle}>
+          Select Fuel 
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box className={styles.filterGroup}>
           {fuelOptions.map((fuel) => (
-            <Button
+            <button
               key={fuel}
-              variant={selectedFuels.includes(fuel) ? "contained" : "outlined"}
               onClick={() => handleFuelClick(fuel)}
-              sx={{ 
-                borderRadius: '20px',
-                textTransform: 'none',
-                mb: 1
-              }}
+              className={`${styles.filterButton} ${selectedFuels.includes(fuel) ? styles.filterButtonSelected : ''}`}
             >
               {fuel}
-            </Button>
+            </button>
           ))}
         </Box>
       </Box>
@@ -84,23 +94,18 @@ export default function FilterByServices() {
       <Divider />
 
       <Box>
-        <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Typography className={styles.categoryTitle}>
           Select Services
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box className={styles.filterGroup}>
           {serviceOptions.map((service) => (
-            <Button
+            <button
               key={service}
-              variant={selectedServices.includes(service) ? "contained" : "outlined"}
               onClick={() => handleServiceClick(service)}
-              sx={{ 
-                borderRadius: '20px',
-                textTransform: 'none',
-                mb: 1
-              }}
+              className={`${styles.filterButton} ${selectedServices.includes(service) ? styles.filterButtonSelected : ''}`}
             >
               {service}
-            </Button>
+            </button>
           ))}
         </Box>
       </Box>
@@ -108,25 +113,53 @@ export default function FilterByServices() {
       <Divider />
 
       <Box>
-        <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Typography className={styles.categoryTitle}>
           Select Station Type
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box className={styles.filterGroup}>
           {stationTypes.map((type) => (
-            <Button
+            <button
               key={type}
-              variant={selectedStationTypes.includes(type) ? "contained" : "outlined"}
               onClick={() => handleStationTypeClick(type)}
-              sx={{ 
-                borderRadius: '20px',
-                textTransform: 'none',
-                mb: 1
-              }}
+              className={`${styles.filterButton} ${selectedStationTypes.includes(type) ? styles.filterButtonSelected : ''}`}
             >
               {type}
-            </Button>
+            </button>
           ))}
         </Box>
+      </Box>
+
+      <Box className={styles.buttonContainer}>
+        <Button
+          variant="outlined"
+          onClick={handleResetFilters}
+          sx={{
+            borderRadius: '20px',
+            textTransform: 'none',
+            borderColor: '#FF6B00',
+            color: '#FF6B00',
+            '&:hover': {
+              borderColor: '#FF6B00',
+              backgroundColor: 'rgba(255, 107, 0, 0.04)'
+            }
+          }}
+        >
+          Reset Filters
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleApplyFilters}
+          sx={{
+            borderRadius: '20px',
+            textTransform: 'none',
+            backgroundColor: '#FF6B00',
+            '&:hover': {
+              backgroundColor: '#e66000'
+            }
+          }}
+        >
+          Apply Filters
+        </Button>
       </Box>
     </Box>
   );
