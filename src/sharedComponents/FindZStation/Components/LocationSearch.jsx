@@ -6,7 +6,7 @@ import FilterByDistance from "../../../FilterByDistance/StationLocator";
 import { useState } from "react";
 
 export const LocationSearch = () => {
-  const [activeTab, setActiveTab] = useState("fuelPrice"); // Set 'fuelPrice' as the default active tab
+  const [activeTab, setActiveTab] = useState("services"); // Set 'services' as the default active tab
 
   const renderActiveTab = () => {
     switch (activeTab) {
