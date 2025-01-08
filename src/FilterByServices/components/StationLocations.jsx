@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoogleMap, OverlayView, Marker } from "@react-google-maps/api";
 import styles from '../FilterByServices.module.css';
+import zlogo from '../../assets/images/zlogo.png';
 
 export function StationLocations({ currentLocation, zoomLevel, filteredStations, calculateDistance }) {
   console.log('StationLocations props:', { currentLocation, zoomLevel, filteredStations });
@@ -36,7 +37,8 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
             key={station.id}
             position={{ lat: station.lat, lng: station.lng }}
             icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+              url: zlogo,
+              scaledSize: { width: 30, height: 30 }
             }}
           >
             <OverlayView
