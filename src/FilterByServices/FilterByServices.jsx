@@ -3,12 +3,53 @@ import { Box, Button, Typography } from '@mui/material';
 import styles from './FilterByServices.module.css';
 import applyFiltersImage from '../assets/images/applyFilters1.jpg';
 import resetFiltersImage from '../assets/images/resetFilters1.jpg';
+import {
+  GoogleMap,
+  OverlayView,
+  useJsApiLoader,
+  Marker
+} from "@react-google-maps/api";
 
-export default function FilterByServices() {
+const API_KEY = import.meta.env.VITE_SECRET_KEY;
+
+const initialStations = [
+  {
+    id: 1,
+    name: "Z Newmarket",
+    lat: -36.8524555,
+    lng: 174.7580782,
+    services: ["Car Wash", "ATM", "Food & Drink"],
+    fuels: ["ZX Premium", "Z91 Unleaded", "Z Diesel"],
+    stationTypes: ["Service Station"],
+    street: "123 Broadway",
+    locality: "Newmarket",
+    country: "New Zealand",
+  },
+  {
+    id: 2,
+    name: "Z Mount Eden",
+    lat: -36.8773,
+    lng: 174.7583,
+    services: ["Trailer Hire", "LPG Swap", "Pay At Pump"],
+    fuels: ["Z91 Unleaded", "Z Diesel", "EV Charging"],
+    stationTypes: ["Service Station", "Truck Stop"],
+    street: "456 Mount Eden Road",
+    locality: "Mount Eden",
+    country: "New Zealand",
+  }
+];
+
+export default function FilterByServices({ currentLocation = { latitude: -36.8485, longitude: 174.7633 }, zoomLevel = 13 }) {
   const [selectedFuels, setSelectedFuels] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedStationTypes, setSelectedStationTypes] = useState([]);
   const [selectedSortBy, setSelectedSortBy] = useState('');
+  const [allStations, setAllStations] = useState(initialStations);
+  const [filteredStations, setFilteredStations] = useState(initialStations);
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: API_KEY
+  });
 
   const fuelOptions = [
     'ZX Premium',
@@ -76,16 +117,51 @@ export default function FilterByServices() {
     setSelectedServices([]);
     setSelectedStationTypes([]);
     setSelectedSortBy('');
+    setFilteredStations(allStations);
   };
 
   const handleApplyFilters = () => {
-    console.log({
-      fuels: selectedFuels,
-      services: selectedServices,
-      stationTypes: selectedStationTypes,
-      sortBy: selectedSortBy
-    });
+    let filtered = allStations;
+
+    if (selectedServices.length > 0) {
+      filtered = filtered.filter(station =>
+        selectedServices.every(service => station.services.includes(service))
+      );
+    }
+
+    if (selectedFuels.length > 0) {
+      filtered = filtered.filter(station =>
+        selectedFuels.every(fuel => station.fuels.includes(fuel))
+      );
+    }
+
+    if (selectedStationTypes.length > 0) {
+      filtered = filtered.filter(station =>
+        selectedStationTypes.every(type => station.stationTypes.includes(type))
+      );
+    }
+
+    setFilteredStations(filtered);
   };
+
+  const calculateDistance = (station, position) => {
+    const toRad = (value) => (value * Math.PI) / 180;
+    const R = 6371;
+    const dLat = toRad(station.lat - position.latitude);
+    const dLng = toRad(station.lng - position.longitude);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(position.latitude)) *
+        Math.cos(toRad(station.lat)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box className={styles.filterContainer}>
@@ -202,6 +278,51 @@ export default function FilterByServices() {
             className={styles.applyButtonImage}
           />
         </Button>
+      </Box>
+
+      <Box className={styles.mapContainer}>
+        <GoogleMap
+          mapContainerClassName={styles.map}
+          center={{
+            lat: currentLocation.latitude,
+            lng: currentLocation.longitude,
+          }}
+          zoom={zoomLevel}
+        >
+          <Marker
+            position={{
+              lat: currentLocation.latitude,
+              lng: currentLocation.longitude,
+            }}
+            icon={{
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            }}
+          />
+          {filteredStations.map((station) => (
+            <OverlayView
+              key={station.id}
+              position={{ lat: station.lat, lng: station.lng }}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <div className={styles.overlayContainer}>
+                <img
+                  src="src/assets/images/zlogo.png"
+                  alt="Z Station"
+                  className={styles.logo}
+                />
+                <div className={styles.stationInfo}>
+                  <div className={styles.stationName}>{station.name}</div>
+                  <div className={styles.stationServices}>
+                    {station.services.join(", ")}
+                  </div>
+                  <div className={styles.distanceLabel}>
+                    {calculateDistance(station, currentLocation).toFixed(2)} km
+                  </div>
+                </div>
+              </div>
+            </OverlayView>
+          ))}
+        </GoogleMap>
       </Box>
     </Box>
   );
