@@ -17,10 +17,10 @@ export function ServiceSelector({
   setSelectedSortBy
 }) {
   const fuelOptions = [
-    "ZX Premium",
-    "Z91 Unleaded",
-    "Z Diesel",
-    "EV Charging",
+    "ZX premium",
+    "Z91 unleaded",
+    "Z diesel",
+    "EV charging"
   ];
 
   const serviceOptions = [
@@ -35,7 +35,7 @@ export function ServiceSelector({
     "Wifi",
   ];
 
-  const stationTypes = ["Service Station", "Truck Stop"];
+  const stationTypes = ["Service station", "Truck stop"];
   const sortByOptions = ["Distance", "Name", "Services"];
 
   const handleFuelClick = (fuel) => {
@@ -67,31 +67,44 @@ export function ServiceSelector({
   };
 
   const handleResetFilters = () => {
+    // Clear all selected filters
     setSelectedFuels([]);
     setSelectedServices([]);
     setSelectedStationTypes([]);
     setSelectedSortBy("");
+    // Reset to show all stations
     setFilteredStations(allStations);
   };
 
   const handleApplyFilters = () => {
-    let filtered = allStations;
+    let filtered = [...allStations];
 
+    // If no filters are selected, show all stations
+    if (selectedFuels.length === 0 && selectedServices.length === 0 && selectedStationTypes.length === 0) {
+      setFilteredStations(allStations);
+      return;
+    }
+
+    // Filter by fuel types (matching exact strings from types array)
     if (selectedFuels.length > 0) {
       filtered = filtered.filter((station) =>
-        station.fuels.some((fuel) => selectedFuels.includes(fuel))
+        station.types.some(type => selectedFuels.includes(type))
       );
     }
 
+    // Filter by services (matching substrings in the services string)
     if (selectedServices.length > 0) {
       filtered = filtered.filter((station) =>
-        station.services.some((service) => selectedServices.includes(service))
+        selectedServices.every(service => 
+          station.services.includes(service)
+        )
       );
     }
 
+    // Filter by station types (matching exact strings from stationTypes array)
     if (selectedStationTypes.length > 0) {
       filtered = filtered.filter((station) =>
-        station.stationTypes.some((type) => selectedStationTypes.includes(type))
+        station.stationTypes.some(type => selectedStationTypes.includes(type))
       );
     }
 
