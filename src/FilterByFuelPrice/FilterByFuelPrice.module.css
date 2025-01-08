@@ -14,6 +14,28 @@
   z-index: 1; /* Place the map below the station list */
 }
 
+.stationList {
+  position: absolute;
+  top: 970px;
+  left: 90px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Slight transparency for better visibility */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 400px; /* Increase the width */
+  height: 650px; /* Set a maximum height */
+  overflow-y: auto; /* Add vertical scrollbar */
+  z-index: 2; /* Ensure the list appears above the map */
+  text-align: left;
+  margin-top: 20px;
+}
+
 .overlayContainer {
   display: flex;
   flex-direction: column;

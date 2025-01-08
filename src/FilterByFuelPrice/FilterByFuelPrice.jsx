@@ -393,7 +393,9 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
   ]);
 
   const [fuelPrice, setFuelPrice] = useState(1.5); // Default fuel price range
-  const [selectedFuelTypes, setSelectedFuelTypes] = useState([]);
+  const [selectedFuelTypes, setSelectedFuelTypes] = useState([]); // Selected fuel types
+  const [selectedStationTypes, setSelectedStationTypes] = useState([]); // Selected station types
+  const [selectedSortOptions, setSelectedSortOptions] = useState([]); // No default sort option
   const [filteredStations, setFilteredStations] = useState(allStations);
 
   // Handle loading state for Google Maps API using useJsApiLoader
@@ -432,6 +434,12 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
         setFuelPrice={setFuelPrice}
         selectedFuelTypes={selectedFuelTypes}
         setSelectedFuelTypes={setSelectedFuelTypes}
+        selectedStationTypes={selectedStationTypes}
+        setSelectedStationTypes={setSelectedStationTypes}
+        selectedSortOptions={selectedSortOptions}
+        setSelectedSortOptions={setSelectedSortOptions}
+        currentLocation={currentLocation}
+        distanceFunction={calculateDistance}
       />
       <GoogleMap
         mapContainerClassName={styles.map}
@@ -485,53 +493,28 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
           </OverlayView>
         ))}
       </GoogleMap>
+      {filteredStations.length > 0 && (
+        <div className={styles.stationList}>
+          <ul>
+            {filteredStations.map((station) => (
+              <li key={station.id}>
+                <h4>{station.name}</h4>
+                <b>
+                  {station.street}, {station.locality}, {station.country}
+                </b>
+                {/* <p>Price: ${station.price.toFixed(2)}</p> */}
+                <p>Services: {station.services}</p>
+                <p>Fuel Types: {station.types.join(", ")}</p>
+                <p>Station Types: {station.stationTypes.join(", ")}</p>
+                <p>
+                  Distance:
+                  {calculateDistance(station, currentLocation).toFixed(2)} km
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
-
-// const applyFilters = async () => {
-//   let stationsWithinLocality = allStations;
-
-//   if (position.lat !== -40.9006 || position.lng !== 174.886) {
-//     const locality = await fetchLocality(position.lat, position.lng);
-//     if (locality) {
-//       stationsWithinLocality = allStations.filter(
-//         (station) => station.locality === locality
-//       );
-//     }
-//   }
-
-//   const filtered = stationsWithinLocality
-//     .filter(
-//       (station) =>
-//         Object.values(station.prices).some((price) => price <= maxPrice) &&
-//         (selectedFuelTypes.length === 0 ||
-//           station.types.some((type) => selectedFuelTypes.includes(type))) &&
-//         (selectedStationTypes.length === 0 ||
-//           station.stationTypes.some((type) =>
-//             selectedStationTypes.includes(type)
-//           ))
-//     )
-//     .sort((a, b) => {
-//       if (
-//         selectedSortOptions.includes("Cheapest") ||
-//         selectedSortOptions.length === 0
-//       ) {
-//         return (
-//           Math.min(...Object.values(a.prices)) -
-//           Math.min(...Object.values(b.prices))
-//         );
-//       } else if (selectedSortOptions.includes("Nearest")) {
-//         return calculateDistance(a, position) - calculateDistance(b, position);
-//       } else if (selectedSortOptions.includes("Economical")) {
-//         return (
-//           Math.min(...Object.values(a.prices)) /
-//             calculateDistance(a, position) -
-//           Math.min(...Object.values(b.prices)) / calculateDistance(b, position)
-//         );
-//       }
-//       return 0;
-//     });
-
-//   setFilteredStations(filtered);
-// };
