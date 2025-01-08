@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api";
 import { useState } from "react";
 
-const API_KEY = "AIzaSyCU4kzOocg3otWJE5QqRHca30Zw5FP70zs"; // Replace with your actual API key
+const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
 
 export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
   const [allStations, setAllStations] = useState([

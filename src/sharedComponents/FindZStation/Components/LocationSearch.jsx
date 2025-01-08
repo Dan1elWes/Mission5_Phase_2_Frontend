@@ -2,10 +2,10 @@ import React from "react";
 import styles from "../styles/LocationSearch.module.css";
 import FilterByServices from "../../../FilterByServices/FilterByServices";
 import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByFuelPrice";
-import FilterByDistance from "../../../FilterByDistance/FilterByDistance";
+import FilterByDistance from "../../../FilterByDistance/StationLocator";
 import { useState } from "react";
 
-const API_KEY = "AIzaSyCU4kzOocg3otWJE5QqRHca30Zw5FP70zs"; // Replace with your actual API key
+const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
 
 export const LocationSearch = () => {
   const [activeTab, setActiveTab] = useState("fuelPrice"); // Set 'fuelPrice' as the default active tab
