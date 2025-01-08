@@ -178,7 +178,7 @@
   display: block;
 }
 
-.mapContainer {
+.servicesMapContainer {
   position: relative;
   text-align: center;
   justify-content: center;
@@ -187,7 +187,7 @@
   padding: 0 20px;
 }
 
-.map {
+.servicesMap {
   top: 20px;
   height: 800px;
   width: 100%;
@@ -198,7 +198,7 @@
   overflow: hidden;
 }
 
-.overlayContainer {
+.servicesOverlayContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -213,26 +213,26 @@
   margin-top: -20px;
 }
 
-.logo {
+.servicesLogo {
   width: 30px;
   height: 30px;
   margin-bottom: 4px;
 }
 
-.stationInfo {
+.servicesStationInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
 }
 
-.stationName {
+.servicesStationName {
   font-size: 12px;
   font-weight: bold;
   color: #333;
 }
 
-.stationServices {
+.servicesStationServices {
   font-size: 10px;
   color: #666;
   text-align: center;
@@ -242,7 +242,7 @@
   white-space: nowrap;
 }
 
-.distanceLabel {
+.servicesDistanceLabel {
   background-color: #5650af;
   color: #f5f1f1;
   font-size: 10px;
@@ -257,7 +257,7 @@
   justify-content: center;
 }
 
-.currentLocationMarker {
+.servicesCurrentLocationMarker {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -268,7 +268,7 @@
   animation: pulse 2s infinite;
 }
 
-.markerDot {
+.servicesMarkerDot {
   width: 12px;
   height: 12px;
   background: rgb(66, 133, 244);

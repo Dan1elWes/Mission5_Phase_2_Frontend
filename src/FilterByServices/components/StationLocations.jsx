@@ -7,9 +7,9 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
   console.log('StationLocations props:', { currentLocation, zoomLevel, filteredStations });
   
   return (
-    <div className={styles.mapContainer}>
+    <div className={styles.servicesMapContainer}>
       <GoogleMap
-        mapContainerClassName={styles.map}
+        mapContainerClassName={styles.servicesMap}
         center={{
           lat: currentLocation.latitude,
           lng: currentLocation.longitude,
@@ -29,40 +29,37 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
             lng: currentLocation.longitude,
           }}
           icon={{
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 7,
+            fillColor: "#4285F4",
+            fillOpacity: 1,
+            strokeColor: "#ffffff",
+            strokeWeight: 2,
           }}
         />
         {filteredStations && filteredStations.map((station) => (
-          <Marker
+          <OverlayView
             key={station.id}
             position={{ lat: station.lat, lng: station.lng }}
-            icon={{
-              url: zlogo,
-              scaledSize: { width: 30, height: 30 }
-            }}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
-            <OverlayView
-              position={{ lat: station.lat, lng: station.lng }}
-              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-            >
-              <div className={styles.overlayContainer}>
-                <img
-                  src="src/assets/images/zlogo.png"
-                  alt="Z Station"
-                  className={styles.logo}
-                />
-                <div className={styles.stationInfo}>
-                  <div className={styles.stationName}>{station.name}</div>
-                  <div className={styles.stationServices}>
-                    {station.services}
-                  </div>
-                  <div className={styles.distanceLabel}>
-                    {calculateDistance(station, currentLocation).toFixed(2)} km
-                  </div>
+            <div className={styles.servicesOverlayContainer}>
+              <img
+                src="src/assets/images/zlogo.png"
+                alt="Z Station"
+                className={styles.servicesLogo}
+              />
+              <div className={styles.servicesStationInfo}>
+                <div className={styles.servicesStationName}>{station.name}</div>
+                <div className={styles.servicesStationServices}>
+                  {station.services}
+                </div>
+                <div className={styles.servicesDistanceLabel}>
+                  {calculateDistance(station, currentLocation).toFixed(2)} km
                 </div>
               </div>
-            </OverlayView>
-          </Marker>
+            </div>
+          </OverlayView>
         ))}
       </GoogleMap>
     </div>
