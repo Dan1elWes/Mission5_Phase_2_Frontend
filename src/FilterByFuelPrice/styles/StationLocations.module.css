@@ -1,0 +1,29 @@
+/* .stationLocationsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  height: 500px;
+  width: 100%;
+}
+
+.responsiveContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.infoWindowContent {
+  max-width: 200px;
+}
+
+@media (max-width: 991px) {
+  .stationLocationsContainer {
+    height: 300px;
+  }
+
+  .infoWindowContent {
+    max-width: 150px;
+  }
+} */
