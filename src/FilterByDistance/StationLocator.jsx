@@ -5,7 +5,9 @@ const StationLocator = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [stations, setStations] = useState([]);
   const [filteredStations, setFilteredStations] = useState([]);
-  const [distanceFilter, setDistanceFilter] = useState(5); // Default 5km radius
+  const [distanceFilter, setDistanceFilter] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
   // Sample station data (replace with actual API call)
   const sampleStations = [
@@ -19,6 +21,53 @@ const StationLocator = () => {
     },
     // Add more sample stations
   ];
+
+  // Function to search stations
+  const searchStations = async (query) => {
+    try {
+      setIsSearching(true);
+      const response = await fetch(`http://localhost:5000/api/search?query=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setStations(data.results);
+      } else {
+        console.error('Search failed:', data.error);
+      }
+    } catch (error) {
+      console.error('Error searching stations:', error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Handle search input changes
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    
+    // Debounce search to avoid too many requests
+    if (query.length >= 2) {
+      searchStations(query);
+    } else if (query.length === 0) {
+      // Reset to all stations when search is cleared
+      fetchAllStations();
+    }
+  };
+
+  // Fetch all stations
+  const fetchAllStations = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/items');
+      const data = await response.json();
+      
+      if (data.success) {
+        setStations(data.items);
+      }
+    } catch (error) {
+      console.error('Error fetching stations:', error);
+    }
+  };
 
   useEffect(() => {
     // Get user's location when component mounts
@@ -36,11 +85,15 @@ const StationLocator = () => {
       );
     }
 
-    // Set initial stations data
-    setStations(sampleStations);
+    // Fetch initial stations data
+    fetchAllStations();
   }, []);
 
   // Calculate distance between two points using Haversine formula
+  // The Haversine formula is a mathematical equation that calculates the shortest 
+  // distance between two points on a sphere (in our case, Earth) using their latitude and 
+  //longitude coordinates. It's particularly useful for finding real-world distances between locations.
+  
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Earth's radius in km
     const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -77,6 +130,19 @@ const StationLocator = () => {
     <div className="station-locator">
       <div className="filter-section">
         <h2>Find Z Stations Near You</h2>
+        
+        {/* Search input */}
+        <div className="search-section">
+          <input
+            type="text"
+            placeholder="Search stations by name, address, or services..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
+          {isSearching && <span className="searching-indicator">Searching...</span>}
+        </div>
+
         <div className="distance-filter">
           <label htmlFor="distance">Distance (km):</label>
           <select 
