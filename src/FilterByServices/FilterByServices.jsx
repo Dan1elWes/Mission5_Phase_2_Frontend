@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import styles from './FilterByServices.module.css';
+import applyFiltersImage from '../assets/images/applyFilters1.jpg';
+import resetFiltersImage from '../assets/images/resetFilters1.jpg';
 
 export default function FilterByServices() {
   const [selectedFuels, setSelectedFuels] = useState([]);
@@ -159,34 +161,46 @@ export default function FilterByServices() {
 
       <Box className={styles.buttonContainer}>
         <Button
-          variant="outlined"
+          variant="contained"
           onClick={handleResetFilters}
+          className={styles.resetButton}
           sx={{
             borderRadius: '20px',
             textTransform: 'none',
-            borderColor: '#FF6B00',
-            color: '#FF6B00',
+            padding: 0,
+            minWidth: 'unset',
+            overflow: 'hidden',
             '&:hover': {
-              borderColor: '#FF6B00',
-              backgroundColor: 'rgba(255, 107, 0, 0.04)'
+              opacity: 0.9
             }
           }}
         >
-          Reset Filters
+          <img 
+            src={resetFiltersImage} 
+            alt="Reset Filters" 
+            className={styles.resetButtonImage}
+          />
         </Button>
         <Button
           variant="contained"
           onClick={handleApplyFilters}
+          className={styles.applyButton}
           sx={{
             borderRadius: '20px',
             textTransform: 'none',
-            backgroundColor: '#FF6B00',
+            padding: 0,
+            minWidth: 'unset',
+            overflow: 'hidden',
             '&:hover': {
-              backgroundColor: '#e66000'
+              opacity: 0.9
             }
           }}
         >
-          Apply Filters
+          <img 
+            src={applyFiltersImage} 
+            alt="Apply Filters" 
+            className={styles.applyButtonImage}
+          />
         </Button>
       </Box>
     </Box>

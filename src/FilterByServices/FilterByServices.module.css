@@ -157,3 +157,23 @@
   padding-top: 24px;
   padding-left: 16px;
 }
+
+.applyButton {
+  height: 36px;
+}
+
+.applyButtonImage {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.resetButton {
+  height: 36px;
+}
+
+.resetButtonImage {
+  height: 100%;
+  width: auto;
+  display: block;
+}
