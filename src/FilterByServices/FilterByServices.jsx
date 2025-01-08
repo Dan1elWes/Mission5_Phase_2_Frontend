@@ -386,11 +386,11 @@ export default function FilterByServices({ currentLocation = { latitude: -40.900
       country: "New Zealand",
     },
   ]);
-  
+
   const [selectedFuels, setSelectedFuels] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedStationTypes, setSelectedStationTypes] = useState([]);
-  const [selectedSortBy, setSelectedSortBy] = useState("Distance");
+  const [selectedSortBy, setSelectedSortBy] = useState("");
   const [filteredStations, setFilteredStations] = useState(allStations);
 
   const { isLoaded } = useJsApiLoader({

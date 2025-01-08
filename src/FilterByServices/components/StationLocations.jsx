@@ -52,7 +52,7 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
                 <div className={styles.stationInfo}>
                   <div className={styles.stationName}>{station.name}</div>
                   <div className={styles.stationServices}>
-                    {station.services.join(", ")}
+                    {station.services}
                   </div>
                   <div className={styles.distanceLabel}>
                     {calculateDistance(station, currentLocation).toFixed(2)} km

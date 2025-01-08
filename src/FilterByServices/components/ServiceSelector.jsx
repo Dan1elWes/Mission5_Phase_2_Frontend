@@ -70,7 +70,7 @@ export function ServiceSelector({
     setSelectedFuels([]);
     setSelectedServices([]);
     setSelectedStationTypes([]);
-    setSelectedSortBy("Distance");
+    setSelectedSortBy("");
     setFilteredStations(allStations);
   };
 
