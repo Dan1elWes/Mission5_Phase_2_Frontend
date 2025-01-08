@@ -22,3 +22,14 @@
   background-color: #2c259b;
   color: #fff;
 }
+
+@media (max-width: 991px) {
+  .selectButton {
+    width: 100%;
+    font-size: 12px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

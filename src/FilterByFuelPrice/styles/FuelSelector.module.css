@@ -170,3 +170,53 @@
   background-color: #fff;
   margin-left: 15%;
 }
+
+@media (max-width: 991px) {
+  .filterSection {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filterOptions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .actionBar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legend {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .applyFiltersButton,
+  .resetFiltersButton {
+    width: 100%;
+    font-size: 14px;
+    height: 36px;
+  }
+  .container {
+    padding: 10px;
+  }
+
+  .optionsGrid {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sliderContainer {
+    width: 100%;
+  }
+
+  .sliderWrapper {
+    width: 100%;
+  }
+
+  .arrowIconLeft,
+  .arrowIconRight {
+    margin: 0;
+  }
+}

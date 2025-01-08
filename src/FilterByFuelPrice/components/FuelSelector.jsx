@@ -14,11 +14,43 @@ const fuelTypes = [
 const stationTypes = ["Service station", "Truck stop"];
 const sortOptions = ["Nearest", "Cheapest", "Economical"];
 
-export const FuelSelector = () => {
-  const [fuelPrice, setFuelPrice] = useState(1.5);
-
+export const FuelSelector = ({
+  allStations,
+  setFilteredStations,
+  fuelPrice,
+  setFuelPrice,
+  selectedFuelTypes,
+  setSelectedFuelTypes,
+}) => {
   const handleSliderChange = (event) => {
     setFuelPrice(parseFloat(event.target.value));
+  };
+
+  const handleFuelTypeClick = (fuelType) => {
+    setSelectedFuelTypes((prevSelectedFuelTypes) =>
+      prevSelectedFuelTypes.includes(fuelType)
+        ? prevSelectedFuelTypes.filter((type) => type !== fuelType)
+        : [...prevSelectedFuelTypes, fuelType]
+    );
+    
+  };
+
+  const applyFilters = async () => {
+    let stationsWithinLocality = allStations;
+
+    // if (position.lat !== -40.9006 || position.lng !== 174.886) {
+    //   const locality = await fetchLocality(position.lat, position.lng);
+    //   if (locality) {
+    //     stationsWithinLocality = allStations.filter(
+    //       (station) => station.locality === locality
+    //     );
+    //   }
+    // }
+
+    const filtered = stationsWithinLocality.filter((station) =>
+      Object.values(station.prices).some((price) => price <= fuelPrice)
+    );
+    setFilteredStations(filtered);
   };
 
   return (
@@ -28,7 +60,11 @@ export const FuelSelector = () => {
 
         <div className={styles.optionsGrid}>
           {fuelTypes.map((type) => (
-            <SelectButton key={type.label} label={type.label} />
+            <SelectButton
+              key={type.label}
+              label={type.label}
+              onClickfunc={() => handleFuelTypeClick(type.label)}
+            />
           ))}
         </div>
       </div>
@@ -86,7 +122,7 @@ export const FuelSelector = () => {
             />{" "}
             {"Reset filters"}
           </button>
-          <button className={styles.applyFiltersButton}>
+          <button className={styles.applyFiltersButton} onClick={applyFilters}>
             {"Apply filters"}
             <img
               src={

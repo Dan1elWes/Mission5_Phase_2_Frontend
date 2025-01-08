@@ -5,7 +5,7 @@ import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByFuelPrice";
 import FilterByDistance from "../../../FilterByDistance/FilterByDistance";
 import { useState } from "react";
 
-const API_KEY = "AIzaSyCU4kzOocg3otWJE5QqRHca30Zw5FP70zs";
+const API_KEY = "AIzaSyCU4kzOocg3otWJE5QqRHca30Zw5FP70zs"; // Replace with your actual API key
 
 export const LocationSearch = () => {
   const [activeTab, setActiveTab] = useState("fuelPrice"); // Set 'fuelPrice' as the default active tab
@@ -15,7 +15,7 @@ export const LocationSearch = () => {
     location: "",
   }); // Default position (New Zealand)
 
-  const [zoomLevel, setZoomLevel] = useState(6); // Default zoom level for New Zealand
+  const [zoomLevel, setZoomLevel] = useState(6); // Default zoom level for New Zealand
 
   const handleInputChange = (event) => {
     const location = event.target.value;
@@ -30,7 +30,6 @@ export const LocationSearch = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Your custom logic here
   };
 
   const extractLocationDetails = (addressComponents) => {
@@ -115,15 +114,21 @@ export const LocationSearch = () => {
       case "services":
         return <FilterByServices />;
       case "fuelPrice":
-        return <FilterByFuelPrice />;
+        return (
+          <FilterByFuelPrice
+            currentLocation={currentLocation}
+            zoomLevel={zoomLevel}
+          />
+        );
       case "distance":
         return <FilterByDistance />;
       default:
         return null;
     }
   };
+
   return (
-    <>
+    <div>
       <div className={styles.container}>
         <div className={styles.searchContainer}>
           <h2 className={styles.findaStationText}>Find a Station</h2>
@@ -201,6 +206,6 @@ export const LocationSearch = () => {
         </div>
       </div>
       <div className={styles.activeTabContainer}>{renderActiveTab()}</div>
-    </>
+    </div>
   );
 };
