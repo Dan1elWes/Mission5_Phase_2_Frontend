@@ -1,0 +1,37 @@
+.fuelOptionWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 5px;
+}
+
+.colorIndicator {
+  border-radius: 37px;
+  width: 25px;
+  height: 25px;
+  line-height: 9%;
+}
+
+.label {
+  font-size: 14px;
+  color: #1e196a;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+@media (max-width: 991px) {
+  .fuelOptionWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .colorIndicator {
+    width: 20px;
+    height: 20px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+}

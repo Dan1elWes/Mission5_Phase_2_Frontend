@@ -85,3 +85,24 @@
     display: none;
   }
 }
+
+@media (max-width: 991px) {
+  .navigation {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menuItems {
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+  }
+
+  .locateButton {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0;
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+}

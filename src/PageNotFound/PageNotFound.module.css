@@ -1,5 +1,5 @@
 .container {
-  z-index: 10;
+  /* z-index: 10; */
   display: flex;
   width: 100%;
   max-width: 1440px;
