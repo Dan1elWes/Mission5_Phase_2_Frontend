@@ -76,9 +76,17 @@ export const FuelSelector = ({
     }
 
     const filtered = stationsWithinLocality
+      .map((station) => {
+        const filteredPrices = Object.fromEntries(
+          Object.entries(station.prices).filter(
+            ([fuelType, price]) => price <= fuelPrice
+          )
+        );
+        return { ...station, prices: filteredPrices };
+      })
       .filter(
         (station) =>
-          Object.values(station.prices).some((price) => price <= fuelPrice) &&
+          Object.keys(station.prices).length > 0 &&
           (selectedFuelTypes.length === 0 ||
             station.types.some((type) => selectedFuelTypes.includes(type))) &&
           (selectedStationTypes.length === 0 ||
