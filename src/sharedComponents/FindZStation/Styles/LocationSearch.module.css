@@ -24,7 +24,7 @@
   border-radius: 6px;
   border: 2px solid #b3b2b2;
   background: #fff;
-  margin: 0 auto; /* Center the container */
+
 }
 
 /* Search Placeholder styling */
@@ -199,21 +199,24 @@
 .container {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: auto;
   height: 100%;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
   background: linear-gradient(90deg, #ed570e 0%, #ffcb09 100%);
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+  padding-left: 5%;
   margin-top: 1%;
 }
 
 /* Active tab container */
 .activeTabContainer {
   display: flex;
-  justify-content: center;
-  margin-right: 23%;
+  margin-left: 5%;
+  
 }
 
 /* Media Query for screens below 991px (Mobile Layout Adjustments) */

@@ -8,7 +8,7 @@
 .map {
   top: 20px;
   height: 800px;
-  width: 100%;
+  width: 140%;
   margin-bottom: 20px; /* Add margin to create space below the map */
   position: relative; /* Ensure the map respects container-relative positioning */
   z-index: 1; /* Place the map below the station list */
