@@ -7,18 +7,18 @@
 }
 
 .footerContent {
-  max-width: 1200px;
+  width: 75%;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 8rem;
+  justify-content: space-between;
 }
 
 .logoSection {
   padding-top: 0.5rem;
-  margin-left: -10rem;
+ margin-right: 10%;
 }
 
 .footerLogo {
