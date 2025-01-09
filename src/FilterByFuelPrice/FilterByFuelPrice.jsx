@@ -1,5 +1,6 @@
 import { FuelSelector } from "./components/FuelSelector";
 import styles from "./FilterByFuelPrice.module.css";
+import currentLocationIcon from "../assets/images/marker.png";
 import {
   GoogleMap,
   OverlayView,
@@ -106,7 +107,8 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
             lng: currentLocation.longitude,
           }}
           icon={{
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            url: currentLocationIcon, // Use the imported image
+            scaledSize: new google.maps.Size(40, 40), // Adjust the size if needed
           }}
         />
         {filteredStations.map((station) => (
@@ -119,7 +121,12 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
               <img
                 src="src/assets/images/zlogo.png"
                 alt="Company Logo"
-                className={styles.logo}
+                className={styles.zlogo}
+              />
+              <img
+                src="src/assets/images/vector.png"
+                alt="vector Logo"
+                className={styles.vectorlogo}
               />
 
               <div className={styles.priceContainer}>
@@ -154,21 +161,37 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
       </GoogleMap>
       {filteredStations.length > 0 && (
         <div className={styles.stationList}>
-          <ul>
+          <ul className={styles.list}>
             {filteredStations.map((station) => (
               <li key={station.id}>
-                <h4>{station.name}</h4>
-                <b>
+                <h4 className={styles.stationName}>{station.name}</h4>
+                <b className={styles.stationAddress}>
                   {station.street}, {station.locality}, {station.country}
                 </b>
                 {/* <p>Price: ${station.price.toFixed(2)}</p> */}
-                <p>Services: {station.services}</p>
-                <p>Fuel Types: {station.types.join(", ")}</p>
-                <p>Station Types: {station.stationTypes.join(", ")}</p>
-                <p>
+                <p className={styles.fontStyling}>
+                  Services: {station.services}
+                </p>
+                <p className={styles.fontStyling}>
+                  Fuel Types: {station.types.join(", ")}
+                </p>
+                <p className={styles.fontStyling}>
+                  Station Types: {station.stationTypes.join(", ")}
+                </p>
+                <p className={styles.fontStyling}>
                   Distance:
                   {calculateDistance(station, currentLocation).toFixed(2)} km
                 </p>
+                <div className={styles.buttonContainer}>
+                  <button className={styles.getDirectionsButton}>
+                    Get directions
+                  </button>
+                  <img
+                    src="src/assets/images/heart.png"
+                    alt="Heart Logo"
+                    className={styles.heartLogo}
+                  />
+                </div>
               </li>
             ))}
           </ul>
