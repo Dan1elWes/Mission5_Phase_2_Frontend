@@ -5,7 +5,6 @@ import applyFiltersImage from '../../assets/images/applyFilters1.jpg';
 import resetFiltersImage from '../../assets/images/resetFilters1.jpg';
 
 export function ServiceSelector({
-  allStations,
   setFilteredStations,
   selectedFuels,
   setSelectedFuels,
@@ -40,7 +39,7 @@ export function ServiceSelector({
 
   const handleFuelClick = (fuel) => {
     if (selectedFuels.includes(fuel)) {
-      setSelectedFuels(selectedFuels.filter((f) => f !== fuel));
+      setSelectedFuels(selectedFuels.filter(f => f !== fuel));
     } else {
       setSelectedFuels([...selectedFuels, fuel]);
     }
@@ -48,7 +47,7 @@ export function ServiceSelector({
 
   const handleServiceClick = (service) => {
     if (selectedServices.includes(service)) {
-      setSelectedServices(selectedServices.filter((s) => s !== service));
+      setSelectedServices(selectedServices.filter(s => s !== service));
     } else {
       setSelectedServices([...selectedServices, service]);
     }
@@ -56,7 +55,7 @@ export function ServiceSelector({
 
   const handleStationTypeClick = (type) => {
     if (selectedStationTypes.includes(type)) {
-      setSelectedStationTypes(selectedStationTypes.filter((t) => t !== type));
+      setSelectedStationTypes(selectedStationTypes.filter(t => t !== type));
     } else {
       setSelectedStationTypes([...selectedStationTypes, type]);
     }
@@ -66,49 +65,48 @@ export function ServiceSelector({
     setSelectedSortBy(option);
   };
 
-  const handleResetFilters = () => {
-    // Clear all selected filters
+  const handleApplyFilters = async () => {
+    try {
+      // Build query parameters
+      const params = new URLSearchParams();
+      if (selectedFuels.length > 0) {
+        params.append('fuels', selectedFuels.join(','));
+      }
+      if (selectedServices.length > 0) {
+        params.append('services', selectedServices.join(','));
+      }
+      if (selectedStationTypes.length > 0) {
+        params.append('stationTypes', selectedStationTypes.join(','));
+      }
+
+      // Fetch filtered stations from backend
+      const response = await fetch(`http://localhost:5000/api/stations?${params}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch filtered stations');
+      }
+      const filteredData = await response.json();
+      setFilteredStations(filteredData);
+    } catch (error) {
+      console.error('Error applying filters:', error);
+    }
+  };
+
+  const handleResetFilters = async () => {
     setSelectedFuels([]);
     setSelectedServices([]);
     setSelectedStationTypes([]);
-    setSelectedSortBy("");
-    // Reset to show all stations
-    setFilteredStations(allStations);
-  };
-
-  const handleApplyFilters = () => {
-    let filtered = [...allStations];
-
-    // If no filters are selected, show all stations
-    if (selectedFuels.length === 0 && selectedServices.length === 0 && selectedStationTypes.length === 0) {
-      setFilteredStations(allStations);
-      return;
+    setSelectedSortBy("Distance");
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/stations');
+      if (!response.ok) {
+        throw new Error('Failed to fetch stations');
+      }
+      const data = await response.json();
+      setFilteredStations(data);
+    } catch (error) {
+      console.error('Error resetting filters:', error);
     }
-
-    // Filter by fuel types (matching exact strings from types array)
-    if (selectedFuels.length > 0) {
-      filtered = filtered.filter((station) =>
-        station.types.some(type => selectedFuels.includes(type))
-      );
-    }
-
-    // Filter by services (matching substrings in the services string)
-    if (selectedServices.length > 0) {
-      filtered = filtered.filter((station) =>
-        selectedServices.every(service => 
-          station.services.includes(service)
-        )
-      );
-    }
-
-    // Filter by station types (matching exact strings from stationTypes array)
-    if (selectedStationTypes.length > 0) {
-      filtered = filtered.filter((station) =>
-        station.stationTypes.some(type => selectedStationTypes.includes(type))
-      );
-    }
-
-    setFilteredStations(filtered);
   };
 
   return (

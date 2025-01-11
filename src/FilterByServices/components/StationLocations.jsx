@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleMap, OverlayView, Marker } from "@react-google-maps/api";
 import styles from '../FilterByServices.module.css';
 import zlogo from '../../assets/images/zlogo.png';
 
-export function StationLocations({ currentLocation, zoomLevel, filteredStations, calculateDistance }) {
-  console.log('StationLocations props:', { currentLocation, zoomLevel, filteredStations });
+export function StationLocations({ currentLocation, zoomLevel, filteredStations }) {
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
+
+  useEffect(() => {
+    if (map && filteredStations && filteredStations.length > 0) {
+      // Update markers when filteredStations changes
+      setMarkers(filteredStations);
+    }
+  }, [map, filteredStations]);
+  
+  const calculateDistance = (station, currentLocation) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const lat1 = currentLocation.latitude * Math.PI / 180;
+    const lat2 = station.lat * Math.PI / 180;
+    const deltaLat = (station.lat - currentLocation.latitude) * Math.PI / 180;
+    const deltaLon = (station.lng - currentLocation.longitude) * Math.PI / 180;
+
+    const a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c;
+
+    return distance;
+  };
+
+  const onLoad = React.useCallback((map) => {
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(() => {
+    setMap(null);
+  }, []);
   
   return (
     <div className={styles.servicesMapContainer}>
@@ -19,10 +51,12 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
           streetViewControl: false,
           mapTypeControl: false,
           fullscreenControl: false,
-          mapTypeControl: false,
           zoomControl: true,
         }}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
       >
+        {/* Current location marker */}
         <Marker
           position={{
             lat: currentLocation.latitude,
@@ -37,7 +71,9 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
             strokeWeight: 2,
           }}
         />
-        {filteredStations && filteredStations.map((station) => (
+        
+        {/* Station markers */}
+        {markers.map((station) => (
           <OverlayView
             key={station.id}
             position={{ lat: station.lat, lng: station.lng }}
@@ -45,7 +81,7 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations,
           >
             <div className={styles.servicesOverlayContainer}>
               <img
-                src="src/assets/images/zlogo.png"
+                src={zlogo}
                 alt="Z Station"
                 className={styles.servicesLogo}
               />
