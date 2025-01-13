@@ -1,29 +1,28 @@
 import { FuelSelector } from "./components/FuelSelector";
 import styles from "./FilterByFuelPrice.module.css";
 import currentLocationIcon from "../assets/images/marker.png";
-import {
-  GoogleMap,
-  OverlayView,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import { useLoadScript, GoogleMap, Marker, OverlayView } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 
-const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
+const API_KEY = import.meta.env.VITE_SECRET_KEY;
+
+const libraries = ["places"];
 
 export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
-  const [allStations, setAllStations] = useState([]); // State to hold all fuel stations
-  const [loadingStations, setLoadingStations] = useState(true); // State to track loading status
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: API_KEY,
+    libraries,
+  });
 
-  const [fuelPrice, setFuelPrice] = useState(1.5); // Default fuel price range
-  const [selectedFuelTypes, setSelectedFuelTypes] = useState([]); // Selected fuel types
-  const [selectedStationTypes, setSelectedStationTypes] = useState([]); // Selected station types
-  const [selectedSortOptions, setSelectedSortOptions] = useState([]); // No default sort option
+  const [allStations, setAllStations] = useState([]); 
+  const [loadingStations, setLoadingStations] = useState(true);
+  const [fuelPrice, setFuelPrice] = useState(1.5);
+  const [selectedFuelTypes, setSelectedFuelTypes] = useState([]);
+  const [selectedStationTypes, setSelectedStationTypes] = useState([]);
+  const [selectedSortOptions, setSelectedSortOptions] = useState([]);
   const [filteredStations, setFilteredStations] = useState(allStations);
 
-  // Fetch fuel stations data from the backend when the component mounts
   useEffect(() => {
-    // Make a GET request to fetch data
     fetch("http://localhost:8500/fuelstations")
       .then((response) => {
         if (!response.ok) {
@@ -32,23 +31,19 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        setAllStations(data); // Set fetched data into the state
-        setLoadingStations(false); // Set loading to false once data is fetched
+        setAllStations(data);
+        setFilteredStations(data);
+        setLoadingStations(false);
       })
       .catch((error) => {
-        setLoading(false);
+        console.error("Error fetching stations:", error);
+        setLoadingStations(false);
       });
-  }, []); // Empty dependency array ensures this runs only once (when the component mounts)
+  }, []);
 
   useEffect(() => {
     setFilteredStations(allStations);
   }, [allStations]);
-
-  // Handle loading state for Google Maps API using useJsApiLoader
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: API_KEY,
-  });
 
   // Function to calculate distance between current location and a station
   const calculateDistance = (station, position) => {
@@ -64,18 +59,11 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
         Math.sin(dLng / 2) *
         Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in km
+    return R * c; // Distance in km
   };
 
-  // If stations are being loaded, don't render GoogleMap or Marker
-  if (loadingStations) {
-    return <div>Loading...</div>; // You can show a loading indicator here while the stations are loading
-  }
-
-  // If the Maps API is not loaded, don't render GoogleMap or Marker
-  if (!isLoaded) {
-    return <div>Loading...</div>; // You can show a loading indicator here while the API is loading
-  }
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading maps...";
 
   return (
     <div>
