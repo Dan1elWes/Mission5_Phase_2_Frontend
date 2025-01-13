@@ -1,0 +1,56 @@
+.filter-by-distance {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-controls {
+  margin-bottom: 20px;
+}
+
+.filter-controls label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.radius-slider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.radius-slider input[type="range"] {
+  flex: 1;
+  height: 4px;
+  background: linear-gradient(90deg, #ED5910 0%, #FEA03A 100%);
+  border-radius: 2px;
+  -webkit-appearance: none;
+}
+
+.radius-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #ED5910;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.radius-slider input[type="range"]::-webkit-slider-thumb:hover {
+  background: #ED5910;
+}
+
+.radius-slider span {
+  min-width: 60px;
+  padding: 4px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import FilterByDistance from './FilterByDistance';
 import './StationLocator.css';
 
 const StationLocator = () => {
@@ -8,6 +9,7 @@ const StationLocator = () => {
   const [distanceFilter, setDistanceFilter] = useState(5);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedStation, setSelectedStation] = useState(null);
 
   // Sample station data (replace with actual API call)
   const sampleStations = [
@@ -18,8 +20,13 @@ const StationLocator = () => {
       latitude: -36.8688,
       longitude: 174.7766,
       services: ["Cafe", "Car Wash", "Shop"],
+      fuelPrices: {
+        "91": 2.89,
+        "95": 3.09,
+        "Diesel": 2.29
+      }
     },
-    // Add more sample stations
+    // Add more sample stations as needed
   ];
 
   // Function to search stations
@@ -41,21 +48,17 @@ const StationLocator = () => {
     }
   };
 
-  // Handle search input changes
   const handleSearchChange = (event) => {
     const query = event.target.value;
     setSearchQuery(query);
     
-    // Debounce search to avoid too many requests
     if (query.length >= 2) {
       searchStations(query);
     } else if (query.length === 0) {
-      // Reset to all stations when search is cleared
       fetchAllStations();
     }
   };
 
-  // Fetch all stations
   const fetchAllStations = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/items');
@@ -66,11 +69,12 @@ const StationLocator = () => {
       }
     } catch (error) {
       console.error('Error fetching stations:', error);
+      // Use sample data for development
+      setStations(sampleStations);
     }
   };
 
   useEffect(() => {
-    // Get user's location when component mounts
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -85,17 +89,11 @@ const StationLocator = () => {
       );
     }
 
-    // Fetch initial stations data
     fetchAllStations();
   }, []);
 
-  // Calculate distance between two points using Haversine formula
-  // The Haversine formula is a mathematical equation that calculates the shortest 
-  // distance between two points on a sphere (in our case, Earth) using their latitude and 
-  //longitude coordinates. It's particularly useful for finding real-world distances between locations.
-  
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Earth's radius in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a = 
@@ -103,10 +101,13 @@ const StationLocator = () => {
       Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in km
+    return R * c;
   };
 
-  // Filter stations based on distance
+  const handleDistanceChange = (newDistance) => {
+    setDistanceFilter(newDistance);
+  };
+
   useEffect(() => {
     if (userLocation) {
       const filtered = stations.filter(station => {
@@ -122,66 +123,71 @@ const StationLocator = () => {
     }
   }, [userLocation, stations, distanceFilter]);
 
-  const handleDistanceChange = (event) => {
-    setDistanceFilter(Number(event.target.value));
+  const handleStationClick = (station) => {
+    setSelectedStation(station);
   };
 
   return (
     <div className="station-locator">
-      <div className="filter-section">
-        <h2>Find Z Stations Near You</h2>
-        
-        {/* Search input */}
-        <div className="search-section">
-          <input
-            type="text"
-            placeholder="Search stations by name, address, or services..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="search-input"
-          />
-          {isSearching && <span className="searching-indicator">Searching...</span>}
-        </div>
-
-        <div className="distance-filter">
-          <label htmlFor="distance">Distance (km):</label>
-          <select 
-            id="distance" 
-            value={distanceFilter} 
-            onChange={handleDistanceChange}
-          >
-            <option value="5">5 km</option>
-            <option value="10">10 km</option>
-            <option value="15">15 km</option>
-            <option value="20">20 km</option>
-            <option value="25">25 km</option>
-          </select>
-        </div>
+      <div className="search-section">
+        <input
+          type="text"
+          placeholder="Search stations by name, address, or services..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+        {isSearching && <span className="searching-indicator">Searching...</span>}
       </div>
 
-      <div className="stations-list">
-        {userLocation ? (
-          filteredStations.length > 0 ? (
-            filteredStations.map(station => (
-              <div key={station.id} className="station-card">
-                <h3>{station.name}</h3>
-                <p>{station.address}</p>
-                <div className="station-services">
-                  {station.services.map(service => (
-                    <span key={service} className="service-tag">
-                      {service}
-                    </span>
-                  ))}
+      <div className="main-content">
+        <div className="map-section">
+          <FilterByDistance
+            stations={filteredStations}
+            onDistanceChange={handleDistanceChange}
+            selectedStation={selectedStation}
+          />
+        </div>
+
+        <div className="stations-list">
+          <h2>Nearby Z Stations</h2>
+          {userLocation ? (
+            filteredStations.length > 0 ? (
+              filteredStations.map(station => (
+                <div 
+                  key={station.id} 
+                  className={`station-card ${selectedStation?.id === station.id ? 'selected' : ''}`}
+                  onClick={() => handleStationClick(station)}
+                >
+                  <h3>{station.name}</h3>
+                  <p className="address">{station.address}</p>
+                  {station.fuelPrices && (
+                    <div className="fuel-prices">
+                      {Object.entries(station.fuelPrices).map(([type, price]) => (
+                        <div key={type} className="fuel-price">
+                          <span className="fuel-type">{type}</span>
+                          <span className="price">${price.toFixed(2)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="station-services">
+                    {station.services.map(service => (
+                      <span key={service} className="service-tag">
+                        {service}
+                      </span>
+                    ))}
+                  </div>
+                  <button className="view-details-btn">View Details</button>
                 </div>
-                <button className="view-details-btn">View Details</button>
-              </div>
-            ))
+              ))
+            ) : (
+              <p className="no-stations">No stations found within {distanceFilter}km</p>
+            )
           ) : (
-            <p className="no-stations">No stations found within {distanceFilter}km</p>
-          )
-        ) : (
-          <p className="loading">Getting your location...</p>
-        )}
+            <p className="loading">Getting your location...</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 .station-locator {
-  max-width: 1200px;
+  padding: 20px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
 }
 
 .filter-section {
@@ -46,107 +46,166 @@
 
 .search-section {
   margin-bottom: 20px;
-  position: relative;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+  padding: 12px 20px;
+  border: 2px solid #eee;
+  border-radius: 30px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #0066cc;
-  box-shadow: 0 0 5px rgba(0, 102, 204, 0.2);
+  border-color: #ED5910;
+  box-shadow: 0 0 0 2px rgba(237, 89, 16, 0.1);
 }
 
 .searching-indicator {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-left: 10px;
   color: #666;
-  font-size: 14px;
+  font-size: 0.9rem;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+  min-height: 600px;
+}
+
+.map-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .stations-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.stations-list h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
 }
 
 .station-card {
-  background-color: white;
+  background: white;
+  border: 1px solid #eee;
   border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .station-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.station-card.selected {
+  border-color: #ED5910;
+  box-shadow: 0 0 0 2px rgba(237, 89, 16, 0.1);
 }
 
 .station-card h3 {
-  color: #1A2632;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 8px;
 }
 
-.station-card p {
+.station-card .address {
   color: #666;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.fuel-prices {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+
+.fuel-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.fuel-type {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.price {
+  font-weight: 600;
+  color: #ED5910;
 }
 
 .station-services {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .service-tag {
-  background-color: #f0f0f0;
-  color: #1A2632;
-  padding: 0.25rem 0.75rem;
-  border-radius: 16px;
-  font-size: 0.875rem;
+  background: #f0f0f0;
+  color: #666;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
 }
 
 .view-details-btn {
-  background-color: #FF4F1F;
+  width: 100%;
+  padding: 8px;
+  background: linear-gradient(90deg, #ED5910 0%, #FEA03A 100%);
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 0.75rem 1rem;
-  width: 100%;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .view-details-btn:hover {
-  background-color: #e64517;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(237, 89, 16, 0.2);
 }
 
 .no-stations {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 2rem;
-  background-color: #f5f5f5;
-  border-radius: 8px;
   color: #666;
+  text-align: center;
+  padding: 20px;
 }
 
 .loading {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 2rem;
   color: #666;
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+
+  .map-section {
+    height: 400px;
+  }
 }
 
 @media (max-width: 768px) {
