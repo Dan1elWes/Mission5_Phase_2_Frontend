@@ -203,10 +203,10 @@
   flex-direction: column;
   align-items: center;
   background: white;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 4px;
+  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  min-width: 150px;
+  min-width: 120px;
   z-index: 1000;
   position: relative;
   transform: translate(-50%, -100%);
@@ -214,29 +214,29 @@
 }
 
 .servicesLogo {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 4px;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 2px;
 }
 
 .servicesStationInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .servicesStationName {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: #333;
 }
 
 .servicesStationServices {
-  font-size: 10px;
+  font-size: 9px;
   color: #666;
   text-align: center;
-  max-width: 150px;
+  max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -245,13 +245,13 @@
 .servicesDistanceLabel {
   background-color: #5650af;
   color: #f5f1f1;
-  font-size: 10px;
-  padding: 2px 5px;
-  border-radius: 3px;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 2px;
   border: 1px solid #ccc;
   text-align: center;
-  width: 40px;
-  height: 20px;
+  width: 35px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
