@@ -1,63 +1,53 @@
-# React + Vite Frontend
+# Mission 5 Phase 2 - Frontend
 
-This is the frontend application built with React and Vite, featuring a modular architecture.
+## Project Overview
+This is Version 1 of our application based on the prototype design from UX Designers in Phase 1. The application is built as part of a team project where each developer is responsible for implementing at least one screen with both frontend and backend functionality.
 
-## Project Structure
-
-```
-frontend/
-├── src/
-│   ├── sharedComponents/
-│   │   ├── Header/
-│   │   └── Footer/
-│   ├── App.jsx
-│   └── main.jsx
-├── public/
-└── package.json
-```
+## Features
+- MongoDB integration for data persistence
+- React-based frontend with modern UI components
+- Shared common components across developers
+- Screen-based development approach
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js
+- npm or yarn
+- Backend server running (see backend README)
 
 ### Installation
-
 1. Clone the repository
+2. Install dependencies:
 ```bash
-git clone [your-frontend-repo-url]
-```
-
-2. Install dependencies
-```bash
-cd frontend
 npm install
 ```
-
-3. Start the development server
+3. Create a `.env` file with necessary environment variables
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+## Development Guidelines
+- Each developer works on at least one complete screen
+- Screens include both frontend UI and backend integration
+- Use shared components for consistency
+- Follow the established Git workflow for collaboration
 
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-
-## Features
-- Modular component architecture
-- React 18 with Vite for fast development
-- Shared components structure
+## Project Structure
+- `src/` - Source code directory
+- `components/` - Reusable UI components
+- `pages/` - Screen-specific components
+- `services/` - API integration services
 
 ## Contributing
 1. Create a feature branch
-2. Commit your changes
-3. Push to the branch
-4. Create a Pull Request
+2. Implement your screen/feature
+3. Submit a pull request
+4. Collaborate with team members for review
 
-## License
-[Your chosen license]
+## Team Collaboration
+- Use Github for version control
+- Share common components
+- Regular team communication
+- UX Designer consultation as needed
