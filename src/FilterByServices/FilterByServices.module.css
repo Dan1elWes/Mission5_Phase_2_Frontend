@@ -157,3 +157,136 @@
   padding-top: 24px;
   padding-left: 16px;
 }
+
+.applyButton {
+  height: 36px;
+}
+
+.applyButtonImage {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.resetButton {
+  height: 36px;
+}
+
+.resetButtonImage {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.servicesMapContainer {
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.servicesMap {
+  top: 20px;
+  height: 800px;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.servicesOverlayContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
+  z-index: 1000;
+  position: relative;
+  transform: translate(-50%, -100%);
+  margin-top: -20px;
+}
+
+.servicesLogo {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 2px;
+}
+
+.servicesStationInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.servicesStationName {
+  font-size: 11px;
+  font-weight: bold;
+  color: #333;
+}
+
+.servicesStationServices {
+  font-size: 9px;
+  color: #666;
+  text-align: center;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.servicesDistanceLabel {
+  background-color: #5650af;
+  color: #f5f1f1;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 35px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.servicesCurrentLocationMarker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(66, 133, 244, 0.2);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.servicesMarkerDot {
+  width: 12px;
+  height: 12px;
+  background: rgb(66, 133, 244);
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

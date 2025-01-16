@@ -8,7 +8,7 @@ import { useState } from "react";
 const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
 
 export const LocationSearch = () => {
-  const [activeTab, setActiveTab] = useState("fuelPrice"); // Set 'fuelPrice' as the default active tab
+  const [activeTab, setActiveTab] = useState("services"); // Set 'fuelPrice' as the default active tab
   const [currentLocation, setCurrentLocation] = useState({
     latitude: -40.9006,
     longitude: 174.886,
@@ -112,7 +112,7 @@ export const LocationSearch = () => {
   const renderActiveTab = () => {
     switch (activeTab) {
       case "services":
-        return <FilterByServices />;
+        return <FilterByServices currentLocation={currentLocation} zoomLevel={zoomLevel} />;
       case "fuelPrice":
         return (
           <FilterByFuelPrice
