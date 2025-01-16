@@ -8,7 +8,8 @@ import {
 } from "@react-google-maps/api";
 import { useState } from "react";
 
-const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
+const API_KEY = import.meta.env.VITE_SECRET_KEY; 
+const libraries = ["places", "geometry"];
 
 export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
   const [allStations, setAllStations] = useState([
@@ -399,6 +400,7 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
   // Handle loading state for Google Maps API using useJsApiLoader
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
+    libraries
   });
 
   // Function to calculate distance between current location and a station
@@ -440,6 +442,12 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
           lng: currentLocation.longitude,
         }}
         zoom={zoomLevel}
+        options={{
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          zoomControl: true,
+        }}
       >
         <Marker
           position={{
