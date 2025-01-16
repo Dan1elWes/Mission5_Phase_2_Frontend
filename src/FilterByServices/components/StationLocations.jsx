@@ -6,20 +6,31 @@ import zlogo from '../../assets/images/zlogo.png';
 export function StationLocations({ currentLocation, zoomLevel, filteredStations }) {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [stationDistances, setStationDistances] = useState({});
 
   useEffect(() => {
     if (map && filteredStations && filteredStations.length > 0) {
-      // Update markers when filteredStations changes
       setMarkers(filteredStations);
+      
+      // Calculate distances for all stations
+      const distances = {};
+      filteredStations.forEach(station => {
+        distances[station.id] = calculateDistance(station, currentLocation);
+      });
+      setStationDistances(distances);
+
+      // Update map center and zoom
+      map.panTo({ lat: currentLocation.latitude, lng: currentLocation.longitude });
+      map.setZoom(13);
     }
-  }, [map, filteredStations]);
+  }, [map, filteredStations, currentLocation]);
   
-  const calculateDistance = (station, currentLocation) => {
+  const calculateDistance = (station, location) => {
     const R = 6371; // Radius of the Earth in kilometers
-    const lat1 = currentLocation.latitude * Math.PI / 180;
+    const lat1 = location.latitude * Math.PI / 180;
     const lat2 = station.lat * Math.PI / 180;
-    const deltaLat = (station.lat - currentLocation.latitude) * Math.PI / 180;
-    const deltaLon = (station.lng - currentLocation.longitude) * Math.PI / 180;
+    const deltaLat = (station.lat - location.latitude) * Math.PI / 180;
+    const deltaLon = (station.lng - location.longitude) * Math.PI / 180;
 
     const a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
               Math.cos(lat1) * Math.cos(lat2) *
@@ -63,12 +74,12 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations 
             lng: currentLocation.longitude,
           }}
           icon={{
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 7,
-            fillColor: "#4285F4",
-            fillOpacity: 1,
-            strokeColor: "#ffffff",
-            strokeWeight: 2,
+            url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" fill="#4285F4" stroke="white" stroke-width="2"/>
+              </svg>
+            `),
+            anchor: { x: 12, y: 12 },
           }}
         />
         
@@ -91,7 +102,7 @@ export function StationLocations({ currentLocation, zoomLevel, filteredStations 
                   {station.services}
                 </div>
                 <div className={styles.servicesDistanceLabel}>
-                  {calculateDistance(station, currentLocation).toFixed(2)} km
+                  {stationDistances[station.id]?.toFixed(2) || '0.00'} km
                 </div>
               </div>
             </div>

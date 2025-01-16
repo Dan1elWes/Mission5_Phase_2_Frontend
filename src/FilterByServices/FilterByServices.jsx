@@ -5,7 +5,7 @@ import { StationLocations } from './components/StationLocations';
 
 const API_KEY = import.meta.env.VITE_SECRET_KEY;
 
-export default function FilterByServices({ currentLocation = { latitude: -40.9006, longitude: 174.886 }, zoomLevel = 6 }) {
+export default function FilterByServices({ currentLocation, zoomLevel = 6 }) {
   const [allStations, setAllStations] = useState([]);
   const [filteredStations, setFilteredStations] = useState([]);
   const [selectedFuels, setSelectedFuels] = useState([]);
@@ -17,6 +17,7 @@ export default function FilterByServices({ currentLocation = { latitude: -40.900
 
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
+    libraries: ["places", "geometry"],
   });
 
   // Initial data fetch

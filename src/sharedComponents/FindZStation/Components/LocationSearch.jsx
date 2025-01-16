@@ -112,7 +112,7 @@ export const LocationSearch = () => {
   const renderActiveTab = () => {
     switch (activeTab) {
       case "services":
-        return <FilterByServices />;
+        return <FilterByServices currentLocation={currentLocation} zoomLevel={zoomLevel} />;
       case "fuelPrice":
         return (
           <FilterByFuelPrice
