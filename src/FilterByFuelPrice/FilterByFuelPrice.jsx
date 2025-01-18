@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useGoogleMaps } from "../sharedComponents/GoogleMapsLoader/GoogleMapsLoader"; // Import from the shared context
 
 const API_KEY = import.meta.env.VITE_SECRET_KEY; // Your Google API key
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 
 export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
