@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
-import { ServiceSelector } from './components/ServiceSelector';
-import { StationLocations } from './components/StationLocations';
+import { ServiceSelector } from "./components/ServiceSelector";
+import { StationLocations } from "./components/StationLocations";
 
 const API_KEY = import.meta.env.VITE_SECRET_KEY;
 
@@ -24,16 +24,18 @@ export default function FilterByServices({ currentLocation, zoomLevel = 6 }) {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await fetch("http://localhost:8500/fuelstations");
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/fuelstations`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch stations');
+          throw new Error("Failed to fetch stations");
         }
         const data = await response.json();
         setAllStations(data);
         setFilteredStations(data);
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching stations:', err);
+        console.error("Error fetching stations:", err);
       } finally {
         setLoading(false);
       }
