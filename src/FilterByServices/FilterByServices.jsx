@@ -4,6 +4,7 @@ import { ServiceSelector } from './components/ServiceSelector';
 import { StationLocations } from './components/StationLocations';
 
 const API_KEY = import.meta.env.VITE_SECRET_KEY;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function FilterByServices({ currentLocation, zoomLevel = 6 }) {
   const [allStations, setAllStations] = useState([]);
@@ -24,7 +25,7 @@ export default function FilterByServices({ currentLocation, zoomLevel = 6 }) {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/fuelstations");
+        const response = await fetch(`${API_URL}/fuelstations`);
         if (!response.ok) {
           throw new Error('Failed to fetch stations');
         }

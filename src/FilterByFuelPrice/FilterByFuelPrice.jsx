@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useGoogleMaps } from "../sharedComponents/GoogleMapsLoader/GoogleMapsLoader"; // Import from the shared context
 
 const API_KEY = import.meta.env.VITE_SECRET_KEY; // Your Google API key
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
   const { isLoaded } = useGoogleMaps(); // Use the centralized context for loading state
@@ -19,7 +20,7 @@ export default function FilterByFuelPrice({ currentLocation, zoomLevel }) {
 
   // Fetching station data
   useEffect(() => {
-    fetch("http://localhost:5000/fuelstations")
+    fetch(`${API_URL}/fuelstations`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
