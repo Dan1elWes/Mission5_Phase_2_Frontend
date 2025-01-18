@@ -1,5 +1,39 @@
 # Mission 5 Phase 2 - Frontend
 
+## Quick Setup Guide
+
+### Required Setup Steps
+1. **Install Prerequisites**
+   - Node.js and npm
+   - Git
+   - Backend server (see backend repository)
+
+2. **Clone and Install**
+   ```bash
+   git clone [repository-url]
+   cd M5-Phase2-frontend
+   npm install
+   ```
+
+3. **Environment Setup**
+   - Create a `.env` file in the root directory with:
+   ```
+   VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   VITE_API_URL=http://localhost:3000  # or your backend URL
+   ```
+   Note: You'll need to obtain a Google Maps API key from the Google Cloud Console
+
+4. **Start the Development Server**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at http://localhost:5173
+
+### Troubleshooting
+- If the map doesn't load, verify your Google Maps API key
+- If API calls fail, ensure the backend server is running
+- For port conflicts, Vite will automatically suggest an alternative port
+
 ## Project Overview
 This is Version 1 of our application based on the prototype design from UX Designers in Phase 1. The application is built as part of a team project where each developer is responsible for implementing at least one screen with both frontend and backend functionality.
 
