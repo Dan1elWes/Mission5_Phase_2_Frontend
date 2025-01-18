@@ -24,7 +24,7 @@ export default function FilterByServices({ currentLocation, zoomLevel = 6 }) {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/stations');
+        const response = await fetch("http://localhost:8500/fuelstations");
         if (!response.ok) {
           throw new Error('Failed to fetch stations');
         }

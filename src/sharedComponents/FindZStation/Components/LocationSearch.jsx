@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useGoogleMaps } from "../../GoogleMapsLoader/GoogleMapsLoader"; // Import the hook to check loading state
 import styles from "../styles/LocationSearch.module.css";
 import FilterByServices from "../../../FilterByServices/FilterByServices";
 import FilterByFuelPrice from "../../../FilterByFuelPrice/FilterByFuelPrice";
 import FilterByDistance from "../../../FilterByDistance/StationLocator";
-import { useState } from "react";
 
-const API_KEY = import.meta.env.VITE_SECRET_KEY; // Replace with your actual API key
+const API_KEY = import.meta.env.VITE_SECRET_KEY;
 
 export const LocationSearch = () => {
-  const [activeTab, setActiveTab] = useState("services"); // Set 'fuelPrice' as the default active tab
+  const { isLoaded, loadError } = useGoogleMaps(); // Use the Google Maps loading state
+  const [activeTab, setActiveTab] = useState("services"); // Default tab
   const [currentLocation, setCurrentLocation] = useState({
     latitude: -40.9006,
     longitude: 174.886,
     location: "",
-  }); // Default position (New Zealand)
+  });
 
-  const [zoomLevel, setZoomLevel] = useState(6); // Default zoom level for New Zealand
+  const [zoomLevel, setZoomLevel] = useState(6);
 
   const handleInputChange = (event) => {
     const location = event.target.value;
@@ -64,7 +65,7 @@ export const LocationSearch = () => {
           longitude: lng,
           location: fullLocation,
         });
-        setZoomLevel(13); // Zoom in more for user-specified location
+        setZoomLevel(13);
       } else {
         console.error("Error fetching location coordinates:", data.status);
       }
@@ -73,46 +74,15 @@ export const LocationSearch = () => {
     }
   };
 
-  const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          await fetchLocationName(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting current location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
-
-  const fetchLocationName = async (latitude, longitude) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.status === "OK") {
-        const { localityName, countryName } = extractLocationDetails(
-          data.results[0].address_components
-        );
-        const fullLocation = `${localityName}, ${countryName}`;
-        setCurrentLocation({ latitude, longitude, location: fullLocation });
-        setZoomLevel(13); // Zoom in more for user-specified location
-      } else {
-        console.error("Error fetching location name:", data.status);
-      }
-    } catch (error) {
-      console.error("Error fetching location name:", error);
-    }
-  };
-
   const renderActiveTab = () => {
     switch (activeTab) {
       case "services":
-        return <FilterByServices currentLocation={currentLocation} zoomLevel={zoomLevel} />;
+        return (
+          <FilterByServices
+            currentLocation={currentLocation}
+            zoomLevel={zoomLevel}
+          />
+        );
       case "fuelPrice":
         return (
           <FilterByFuelPrice
@@ -126,6 +96,10 @@ export const LocationSearch = () => {
         return null;
     }
   };
+
+  if (!isLoaded) {
+    return <div>Loading Google Maps...</div>; // Show loading indicator until Google Maps is loaded
+  }
 
   return (
     <div>
@@ -149,7 +123,7 @@ export const LocationSearch = () => {
             <button className={styles.searchIcon} onClick={handleSearch}>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/aed59eff0e8517a6f05c7173c66db43ec8a1a9a84026c95e04dae987750c2c94?apiKey=f1e955cb66494e36a9a2064626167bd8&"
-                alt=""
+                alt="search icon"
                 role="presentation"
               />
             </button>
@@ -158,13 +132,13 @@ export const LocationSearch = () => {
           <div className={styles.locationContainer}>
             <button
               className={styles.locationText}
-              onClick={handleUseCurrentLocation}
+           
               aria-label="Use current location"
             >
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/f1e955cb66494e36a9a2064626167bd8/15ce6de65fb993b4142d1b963fa1b2c315149b550a6badf5b2201d1f284e153a?apiKey=f1e955cb66494e36a9a2064626167bd8&"
                 className={styles.locationIcon}
-                alt=""
+                alt="location icon"
                 role="presentation"
               />
               Or use my current location
